@@ -22,16 +22,16 @@
             <a href="index.html" class="flex items-center px-3 py-2 bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-md">
                 <i data-lucide="layout-dashboard" class="h-5 w-5 mr-3"></i> Dashboard
             </a>
-            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="caixas.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
                 <i data-lucide="archive" class="h-5 w-5 mr-3"></i> Caixas
             </a>
             <a href="documentos.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
                 <i data-lucide="file-text" class="h-5 w-5 mr-3"></i> Acervo
             </a>
-            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="transferencias.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
                 <i data-lucide="arrow-right-left" class="h-5 w-5 mr-3"></i> Transferências
             </a>
-            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="solicitacoes.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
                 <i data-lucide="send" class="h-5 w-5 mr-3"></i> Solicitações
             </a>
         </nav>
@@ -48,7 +48,7 @@
                     <i data-lucide="moon" class="h-5 w-5" id="icon-theme"></i>
                 </button>
                 <div class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                    A
+                    R
                 </div>
             </div>
         </header>
@@ -87,7 +87,7 @@
                     <p class="text-xs text-gray-500 mt-1">Status "Emprestado"</p>
                 </div>
 
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50" onclick="window.location.href='solicitacoes.html'">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-sm font-medium text-gray-600 dark:text-gray-300">Solicitações Pendentes</h3>
                         <i data-lucide="send" class="h-4 w-4 text-gray-400"></i>
@@ -116,8 +116,8 @@
                         <button onclick="window.location.href='documentos.html?add=true'" class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors">
                             <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i> Adicionar ao Acervo
                         </button>
-                        <button class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md font-medium transition-colors">
-                            <i data-lucide="search" class="h-4 w-4 mr-2"></i> Busca Avançada
+                        <button onclick="window.location.href='caixas.html'" class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md font-medium transition-colors">
+                            <i data-lucide="archive" class="h-4 w-4 mr-2"></i> Gerenciar Caixas
                         </button>
                     </div>
                 </div>
