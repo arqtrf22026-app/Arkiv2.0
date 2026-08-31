@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARKIV - Acervo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-200">
+
+    <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
+            <i data-lucide="box" class="h-8 w-8 text-blue-600 mr-2"></i>
+            <span class="text-xl font-bold">ARKIV</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            <a href="index.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="layout-dashboard" class="h-5 w-5 mr-3"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="archive" class="h-5 w-5 mr-3"></i> Caixas
+            </a>
+            <a href="documentos.html" class="flex items-center px-3 py-2 bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-md">
+                <i data-lucide="file-text" class="h-5 w-5 mr-3"></i> Acervo
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="arrow-right-left" class="h-5 w-5 mr-3"></i> Transferências
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="send" class="h-5 w-5 mr-3"></i> Solicitações
+            </a>
+        </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 z-10">
+            <button id="btn-toggle-sidebar" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="menu"></i></button>
+            <div class="flex items-center space-x-4">
+                <button id="btn-theme" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="moon" id="icon-theme"></i></button>
+                <div class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="mb-6 border-b border-gray-200 dark:border-gray-700 pb-4 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+                <div>
+                    <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Gerenciamento do Acervo</h1>
+                    <p class="text-sm text-gray-500 mt-1">Cadastre e gerencie as descrições dos documentos do acervo.</p>
+                </div>
+                <button onclick="abrirModalDocumento()" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition whitespace-nowrap">
+                    <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i> Adicionar ao Acervo
+                </button>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto max-h-[65vh]">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-gray-50 dark:bg-gray-700/50 sticky top-0 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+                            <tr>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">ID Interno</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Status</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Órgão</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Categoria</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Nº Documento</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Data Abrangente</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-documentos" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Injetado via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Adicionar/Editar -->
+    <div id="modal-documento" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold" id="modal-titulo">Adicionar Item ao Acervo</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400" id="modal-desc">Preencha as informações básicas do documento.</p>
+                </div>
+                <button onclick="fecharModalDocumento()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="x"></i></button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="hidden" id="form-id">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Status*</label>
+                        <select id="form-status" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="Arquivado">Arquivado</option>
+                            <option value="Pendente de Conferência">Pendente de Conferência</option>
+                            <option value="Emprestado">Emprestado</option>
+                            <option value="Desarquivado">Desarquivado</option>
+                            <option value="Aguardando prazo para eliminação">Aguardando prazo para eliminação</option>
+                            <option value="Eliminado">Eliminado</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Órgão*</label>
+                        <select id="form-orgao" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="TRF2">TRF2</option>
+                            <option value="SJRJ">SJRJ</option>
+                            <option value="SJES">SJES</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Categoria*</label>
+                        <select id="form-categoria" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                            <option value="Documento">Documento</option>
+                            <option value="Dossiê">Dossiê</option>
+                            <option value="Processo Judicial">Processo Judicial</option>
+                            <option value="Processo Administrativo">Processo Administrativo</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Número do Documento</label>
+                        <input type="text" id="form-numero" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Ex: PRC-001/2024">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Data Abrangente</label>
+                        <input type="text" id="form-data-abrangente" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Ex: 01/2023 - 03/2023">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Ano Eliminação Previsto</label>
+                        <input type="text" id="form-ano-elim" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Ex: 2039">
+                    </div>
+                    <div class="space-y-2 lg:col-span-3">
+                        <label class="text-sm font-medium">Descrição do Documento</label>
+                        <textarea id="form-descricao" rows="3" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Detalhes sobre o conteúdo..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">
+                <button onclick="fecharModalDocumento()" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition">Cancelar</button>
+                <button onclick="salvarDocumento()" class="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition shadow-sm">Salvar Documento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import do layout compartilhado e lógica de documentos -->
+    <script src="script.js"></script>
+    <script src="documentos.js"></script>
+</body>
+</html>
