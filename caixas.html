@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARKIV - Caixas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-200">
+
+    <!-- Menu Lateral -->
+    <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
+            <i data-lucide="box" class="h-8 w-8 text-blue-600 mr-2"></i>
+            <span class="text-xl font-bold">ARKIV</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            <a href="index.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="layout-dashboard" class="h-5 w-5 mr-3"></i> Dashboard
+            </a>
+            <a href="caixas.html" class="flex items-center px-3 py-2 bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-md">
+                <i data-lucide="archive" class="h-5 w-5 mr-3"></i> Caixas
+            </a>
+            <a href="documentos.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="file-text" class="h-5 w-5 mr-3"></i> Acervo
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="arrow-right-left" class="h-5 w-5 mr-3"></i> Transferências
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                <i data-lucide="send" class="h-5 w-5 mr-3"></i> Solicitações
+            </a>
+        </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 z-10">
+            <button id="btn-toggle-sidebar" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="menu"></i></button>
+            <div class="flex items-center space-x-4">
+                <button id="btn-theme" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="moon" id="icon-theme"></i></button>
+                <div class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="mb-6 border-b border-gray-200 dark:border-gray-700 pb-4 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+                <div>
+                    <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Gerenciamento de Caixas</h1>
+                    <p class="text-sm text-gray-500 mt-1">Cadastre e gerencie o armazenamento físico do acervo.</p>
+                </div>
+                <button onclick="abrirModalCaixa()" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition whitespace-nowrap">
+                    <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i> Nova Caixa
+                </button>
+            </div>
+
+            <!-- Tabela de Caixas -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto max-h-[65vh]">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-gray-50 dark:bg-gray-700/50 sticky top-0 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+                            <tr>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Código da Caixa</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Status</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Tipo</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Situação</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300">Localização</th>
+                                <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-300 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-caixas" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Injetado via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Adicionar/Editar Caixa -->
+    <div id="modal-caixa" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold" id="modal-titulo">Adicionar Nova Caixa</h2>
+                </div>
+                <button onclick="fecharModalCaixa()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i data-lucide="x"></i></button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="hidden" id="form-id">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Código da Caixa*</label>
+                        <input type="text" id="form-codigo" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" placeholder="Ex: CX-A-001">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Tipo*</label>
+                        <select id="form-tipo" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
+                            <option value="JUD">JUD</option>
+                            <option value="ADM">ADM</option>
+                            <option value="Pasta">Pasta</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Status</label>
+                        <select id="form-status" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
+                            <option value="Aberta">Aberta</option>
+                            <option value="Fechada">Fechada</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Situação</label>
+                        <select id="form-situacao" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
+                            <option value="Incompleta">Incompleta</option>
+                            <option value="Completa">Completa</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-medium">Localização Física (Prédio/Sala/Estante)</label>
+                        <input type="text" id="form-local" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" placeholder="Ex: Sede - Arquivo Central - Estante 1">
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-medium">Descrição</label>
+                        <textarea id="form-descricao" rows="2" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" placeholder="Conteúdo geral da caixa"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">
+                <button onclick="fecharModalCaixa()" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium">Cancelar</button>
+                <button onclick="salvarCaixa()" class="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700">Salvar Caixa</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="caixas.js"></script>
+</body>
+</html>
