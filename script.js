@@ -4,7 +4,7 @@ const STORAGE_KEYS = {
     TRANSFERENCIAS: 'arquivocentral_transferencias'
 };
 
-// Dados Mockados para inicializar o sistema de forma amigável
+// Dados Mockados
 const placeholderDocumentos = [
   { id: "DOC001", status: "Arquivado", orgao: "TRF2", origem: "Tribunal de Justiça - TJ", categoria: "Processo Judicial", tipoDocumento: "Ação Ordinária", numeroDocumento: "PRC-2023-001", dataAbrangente: "01/2023 - 03/2023", anoEliminacaoPrevisto: "2039", descricaoDocumento: "Processo referente à disputa contratual X." },
   { id: "DOC002", status: "Emprestado", orgao: "SJRJ", origem: "Secretaria Municipal - SM", categoria: "Documento", tipoDocumento: "Solicitação de Informações", numeroDocumento: "OFC-2023-045", dataAbrangente: "20/03/2023", anoEliminacaoPrevisto: "2027", descricaoDocumento: "Ofício solicitando informações." },
@@ -20,7 +20,13 @@ const placeholderSolicitacoes = [
 document.addEventListener("DOMContentLoaded", () => {
     inicializarBancoDeDados();
     configurarLayout();
-    carregarEstatisticasDashboard();
+    marcarMenuAtivo();
+    
+    // Carrega estatísticas apenas se estiver na página do Dashboard
+    if (document.getElementById('stat-total-docs')) {
+        carregarEstatisticasDashboard();
+    }
+    
     lucide.createIcons();
 });
 
@@ -70,6 +76,28 @@ function carregarEstatisticasDashboard() {
             </div>
         `).join('');
     }
+}
+
+function marcarMenuAtivo() {
+    const caminho = window.location.pathname;
+    let nomePagina = caminho.split("/").pop();
+    
+    // Se o nome da página for vazio (ex: abriu direto na pasta), define como index
+    if (!nomePagina) nomePagina = "index.html";
+
+    const linksMenu = document.querySelectorAll('#menu-navegacao a');
+    
+    linksMenu.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Remove as classes de destaque de todos
+        link.className = "flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors";
+        
+        // Aplica o destaque apenas no link que corresponde à página atual
+        if (href === nomePagina) {
+            link.className = "flex items-center px-3 py-2 bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-md transition-colors";
+        }
+    });
 }
 
 function configurarLayout() {
