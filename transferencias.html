@@ -10,25 +10,26 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex h-screen overflow-hidden transition-colors duration-200">
 
+    <!-- Menu Lateral (Sidebar) -->
     <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300">
         <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
-            <i data-lucide="box" class="h-8 w-8 text-blue-600 mr-2"></i>
-            <span class="text-xl font-bold">ARKIV</span>
+            <i data-lucide="box" class="h-8 w-8 text-blue-600 dark:text-blue-400 mr-2"></i>
+            <span class="text-xl font-bold tracking-tight">ARKIV</span>
         </div>
-        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-            <a href="index.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1" id="menu-navegacao">
+            <a href="index.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                 <i data-lucide="layout-dashboard" class="h-5 w-5 mr-3"></i> Dashboard
             </a>
-            <a href="caixas.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="caixas.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                 <i data-lucide="archive" class="h-5 w-5 mr-3"></i> Caixas
             </a>
-            <a href="documentos.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="documentos.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                 <i data-lucide="file-text" class="h-5 w-5 mr-3"></i> Acervo
             </a>
-            <a href="transferencias.html" class="flex items-center px-3 py-2 bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 rounded-md">
+            <a href="transferencias.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                 <i data-lucide="arrow-right-left" class="h-5 w-5 mr-3"></i> Transferências
             </a>
-            <a href="solicitacoes.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+            <a href="solicitacoes.html" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                 <i data-lucide="send" class="h-5 w-5 mr-3"></i> Solicitações
             </a>
         </nav>
